@@ -15,7 +15,8 @@ int main() {
 
     fstream archivo;
 
-    archivo.open("/home/nicko/Documents/ClionProjects/Tarea-Corta---Arreglos-Paginados/Archivos/1kb", ios::in | ios::binary);
+    archivo.open("/home/nicko/Documents/ClionProjects/Tarea-Corta---Arreglos-Paginados/Archivos/1kb",
+                 ios::in | ios::binary);
 
     if(archivo.is_open())
     {
@@ -23,12 +24,10 @@ int main() {
         archivo.read(page, mMax);
     }
 
-    for (int i = 0; i < mMax+1; ++i)
+    for (int i = 0; i < mMax; ++i)
     {
-        //printf("%i\n",i);
         if(page[i] == ',')
         {
-            a++;
             if(pIN < pSize)
             {
                 while (c > 0)
