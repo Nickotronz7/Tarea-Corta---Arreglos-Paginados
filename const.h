@@ -6,6 +6,6 @@
 #define TAREA_CORTA_ARREGLOS_PAGINADOS_CONST_H
 
 int mMax = 1024; //Memoria maxima
-int pSize = 262; //Cantidad de ints por pagina
+//int pSize = 256; //Cantidad de ints por pagina
 
 #endif //TAREA_CORTA_ARREGLOS_PAGINADOS_CONST_H
