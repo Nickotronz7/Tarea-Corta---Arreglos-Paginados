@@ -19,6 +19,8 @@ int getNumperPage(char* page){
     return a;
 }
 
+int pot(int,int);
+
 int len = 0;
 
 int* getPage(){
@@ -52,7 +54,7 @@ int* getPage(){
             {
                 while (c > 0)
                 {
-                    pNum[pIN] += ((page[i-c])-'0')*(pow(10,c));
+                    pNum[pIN] += ((page[i-c])-'0')*(pot(10,c));
                     c--;
                 }
                 pNum[pIN] = pNum[pIN]/10;
@@ -99,6 +101,13 @@ int main() {
     }
 
     writefile(page);
-
     return 0;
+}
+
+int pot(int x, int n){
+    int res = 1;
+    for (int i = 0; i < n; ++i) {
+        res *= x;
+    }
+    return res;
 }
