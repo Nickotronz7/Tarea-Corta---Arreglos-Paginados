@@ -3,13 +3,14 @@
 #include <tgmath.h>
 #include <cstring>
 #include "const.h"
+#include "sorts.hpp"
 
 using namespace std;
 
 int getNumperPage(char* page){
 
     int a = 0;
-    for (int i = 0; i < mMax; ++i) {
+    for (int i = 0; i < pMax; ++i) {
         if(page[i] == ',')
         {
             a++;
@@ -18,9 +19,11 @@ int getNumperPage(char* page){
     return a;
 }
 
-void getPage(){
+int len = 0;
 
-    char* page = (char*)calloc(mMax, sizeof(char));
+int* getPage(){
+
+    char* page = (char*)calloc(pMax, sizeof(char));
     int pIN = 0;
     int c = 0;
     int a = 0;
@@ -33,14 +36,15 @@ void getPage(){
     if(archivo.is_open())
     {
         archivo.seekg(0,ios::beg);
-        archivo.read(page, mMax);
+        archivo.read(page, pMax);
     }
 
     int pSize;
     pSize = getNumperPage(page);
+    len = pSize;
     int* pNum = (int*)calloc(pSize, sizeof(int));
 
-    for (int i = 0; i < mMax; ++i)
+    for (int i = 0; i < pMax; ++i)
     {
         if(page[i] == ',')
         {
@@ -59,21 +63,20 @@ void getPage(){
         }
     }
 
+    return pNum;
+    /*
     for (int j = 0; j < pSize; ++j) {
         cout << pNum[j] << endl;
     }
+     */
 }
 
-void writefile(){
-    string sNUM;
+void writefile(int* nums){
 
-    int nums[] = {1,5,9,5,98,3,8,6,41,9,1,684,1,6,84,64,98,96};
-    printf("%i\n", sizeof(nums)/sizeof(int));
     string x;
-    for (int i = 0; i < sizeof(nums) / sizeof(int); ++i) {
+    for (int i = 0; i < len; ++i) {
         x += (to_string(nums[i]) + ',');
     }
-    cout << x << endl;
 
     char* buffer = new char[x.size()+1];
     memcpy(buffer,x.c_str(),x.size());
@@ -86,6 +89,16 @@ void writefile(){
 }
 
 int main() {
+
+    int* page;
+    page = getPage();
+    quicksort(page,0,len-1);
+
+    for (int i = 0; i < len; ++i) {
+        //cout << page[i] << endl;
+    }
+
+    writefile(page);
 
     return 0;
 }
