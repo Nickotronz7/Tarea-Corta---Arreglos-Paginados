@@ -2,8 +2,8 @@
 // Created by nicko on 6/03/17.
 //
 
-#ifndef TAREA_CORTA_ARREGLOS_PAGINADOS_QUICKSORT_HPP
-#define TAREA_CORTA_ARREGLOS_PAGINADOS_QUICKSORT_HPP
+#ifndef TAREA_CORTA_ARREGLOS_PAGINADOS_SORTS_H
+#define TAREA_CORTA_ARREGLOS_PAGINADOS_SORTS_H
 
 // Función para dividir el array y hacer los intercambios
 int divide(int *array, int start, int end) {

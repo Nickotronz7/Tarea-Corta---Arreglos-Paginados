@@ -6,23 +6,58 @@
 #define TAREA_CORTA_ARREGLOS_PAGINADOS_PAGEDARRAY_H
 
 #include <istream>
+#include <fstream>
+
+using namespace std;
 
 class PagedArray {
 
 public:
-    PagedArray();
+    PagedArray(const char*);
     ~PagedArray();
 
     int operator [](int);
 
-    int *getPagePtr() const;
+    int getMemory() const;
 
-    void setPagePtr(int *pagePtr);
+    void setMemory(int Memory);
 
-protected:
-    int* _Page = NULL;
+    int getNumperpage(char*);//Funcion que devuelve los numeros por pagina
 
+    int* getPageNumber(char*);//Funcion que retorna un array de numeros unicamente :D
 
+    char* getsPage(fstream&);//Funcion que retorna un array con numeros y comas... :/
+
+    fstream &getFile();
+
+    void setFile(const char*);
+
+private:
+
+    int Memory = 0;
+
+    const static int pMax = 1023; //Tamaño maximo de cada pagina
+    const static int nums_page=256; //Cantidad de numeros por pagina
+
+    struct page{
+
+        int* pageA = (int*)calloc(nums_page, sizeof(int));
+        int* pageB = (int*)calloc(nums_page, sizeof(int));
+        int* pageC = (int*)calloc(nums_page, sizeof(int));
+        int* pageD = (int*)calloc(nums_page, sizeof(int));
+        int* pageE = (int*)calloc(nums_page, sizeof(int));
+        int* pageF = (int*)calloc(nums_page, sizeof(int));
+
+    } pages;
+
+    char* _Page = (char*)calloc(pMax,sizeof(char));
+
+    fstream file;
+
+public:
+    char* get_Page() const;
+
+    void set_Page(char *_Page);
 
 };
 

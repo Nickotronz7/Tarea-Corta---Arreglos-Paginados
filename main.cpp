@@ -3,7 +3,8 @@
 #include <tgmath.h>
 #include <cstring>
 #include "const.h"
-#include "sorts.hpp"
+#include "sorts.h"
+#include "PagedArray.h"
 
 using namespace std;
 
@@ -28,7 +29,6 @@ int* getPage(){
     char* page = (char*)calloc(pMax, sizeof(char));
     int pIN = 0;
     int c = 0;
-    int a = 0;
 
     fstream archivo;
 
@@ -73,7 +73,7 @@ int* getPage(){
      */
 }
 
-void writefile(int* nums){
+void writefile(int* nums) {
 
     string x;
     for (int i = 0; i < len; ++i) {
@@ -92,19 +92,46 @@ void writefile(int* nums){
 
 int main() {
 
+    /*
     int* page;
     page = getPage();
     quicksort(page,0,len-1);
-
     for (int i = 0; i < len; ++i) {
         //cout << page[i] << endl;
     }
-
     writefile(page);
+*/
+
+    int size;
+
+    fstream file;
+
+    /*
+    file.open("/home/nicko/Documents/ClionProjects/Tarea-Corta---Arreglos-Paginados/Archivos/1kb",
+              ios::in | ios::binary);
+
+    file.seekg(0, ios::end);
+    size = (int)(file.tellg()/sizeof(int));
+    //printf("%i", size);
+*/
+
+    PagedArray* orden = new PagedArray("/home/nicko/Documents/ClionProjects/Tarea-Corta---Arreglos-Paginados/Archivos/8kb");
+
+
+    size = orden->getMemory()-1;
+
+    char* pag = (char*)calloc(pMax,sizeof(char));
+    pag = orden->getsPage((fstream &) orden->getFile());
+
+    for (int i = 0; i < pMax; ++i) {
+        cout << pag[i] << endl;
+    }
+
+    //printf("%i", size);
     return 0;
 }
 
-int pot(int x, int n){
+int pot(int x, int n) {
     int res = 1;
     for (int i = 0; i < n; ++i) {
         res *= x;
