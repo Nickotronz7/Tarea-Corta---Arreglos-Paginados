@@ -1,38 +1,18 @@
 #include <iostream>
 #include <fstream>
-#include <tgmath.h>
-#include <cstring>
-#include "const.h"
-#include "sorts.h"
 #include "PagedArray.h"
 
 using namespace std;
 
 int main() {
 
-/*
-    int* page;
-    page = getPage();
-    quicksort(page,0,len-1);
-    for (int i = 0; i < len; ++i) {
-        //cout << page[i] << endl;
-    }
-    writefile(page);
-
-
-    file.open("/home/nicko/Documents/ClionProjects/Tarea-Corta---Arreglos-Paginados/Archivos/1kb",
-              ios::in | ios::binary);
-
-    file.seekg(0, ios::end);
-    size = (int)(file.tellg()/sizeof(int));
-    //printf("%i", size);
-*/
-
     fstream file;
     PagedArray* orden = new PagedArray("/home/nicko/Documents/ClionProjects/Tarea-Corta---Arreglos-Paginados/Archivos/36kb.txt");
 
 
-    cout << orden->getMemory() << endl;
+    orden->quicksort(orden->pages.pageA, 0, orden->getSize_of_virtual_array());
+
+    orden->~PagedArray();
 
     return 0;
 }
