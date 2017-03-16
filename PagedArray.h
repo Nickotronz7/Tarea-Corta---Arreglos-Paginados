@@ -16,6 +16,10 @@ public:
     PagedArray(const char*);
     ~PagedArray();
 
+    void switch_Page(int);
+
+    int allocate(int);
+
     int operator [](int);
 
     int getMemory() const;
@@ -52,18 +56,8 @@ private:
     const static int pMax = 1023; //Tamaño maximo de cada pagina
     const static int nums_page=256; //Cantidad de numeros por pagina
 
-    /*struct page{
-
-        int* pageA = (int*)calloc(nums_page, sizeof(int));
-        int* pageB = (int*)calloc(nums_page, sizeof(int));
-        int* pageC = (int*)calloc(nums_page, sizeof(int));
-        int* pageD = (int*)calloc(nums_page, sizeof(int));
-        int* pageE = (int*)calloc(nums_page, sizeof(int));
-        int* pageF = (int*)calloc(nums_page, sizeof(int));
-
-    } pages;*/
-
-    page pags_memory[5];
+    int** pags_memory = (int**)calloc(5, sizeof(int));
+    int* num_pags = (int*)calloc(5, sizeof(int));
 
     char* _Page = (char*)calloc(pMax,sizeof(char));
 

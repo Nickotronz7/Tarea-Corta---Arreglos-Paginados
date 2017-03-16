@@ -10,32 +10,43 @@ PagedArray::PagedArray(const char* path) {
 
     setFile(path);
     file.seekg(0, ios::end);
-    setMemory((int)(file.tellg()));
+    setMemory(((int)(file.tellg())));
 
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < 6; ++i) {
         switch (i) {
             case 0: {
-                pages.pageA = getPageNumber(getsPage(file,i));
+                pages.pageA = getPageNumber(getsPage(file, i));
+                pags_memory[i] = pages.pageA;
+                num_pags[i] = i;
             }
             case 1: {
-                pages.pageB = getPageNumber(getsPage(file,i));
+                pages.pageB = getPageNumber(getsPage(file, i));
+                pags_memory[i] = pages.pageB;
+                num_pags[i] = i;
             }
             case 2: {
-                pages.pageC = getPageNumber(getsPage(file,i));
+                pages.pageC = getPageNumber(getsPage(file, i));
+                pags_memory[i] = pages.pageC;
+                num_pags[i] = i;
             }
             case 3: {
-                pages.pageD = getPageNumber(getsPage(file,i));
+                pages.pageD = getPageNumber(getsPage(file, i));
+                pags_memory[i] = pages.pageD;
+                num_pags[i] = i;
             }
             case 4: {
-                pages.pageE = getPageNumber(getsPage(file,i));
+                pages.pageE = getPageNumber(getsPage(file, i));
+                pags_memory[i] = pages.pageE;
+                num_pags[i] = i;
             }
-            default:
-                break;
+            case 5: {
+                pages.pageE = getPageNumber(getsPage(file, i));
+                pags_memory[i] = pages.pageF;
+                num_pags[i] = i;
+                default:
+                    break;
+            }
         }
-    }
-
-    for (int j = 0; j < 5; ++j) {
-
     }
 
 }
@@ -45,9 +56,26 @@ PagedArray::~PagedArray() {
     delete(this);
 }
 
+int PagedArray::allocate(int index) {
+
+    return index;
+}
+
+void PagedArray::switch_Page(int page_num) {
+
+
+
+
+    for (int i = 0; i < 4; ++i) {
+        pags_memory[i] = pags_memory[i+1];
+    }
+    pags_memory[4]=getPageNumber(getsPage(this->file, page_num));
+}
+
 int PagedArray::operator [](int index)
 {
 
+    return index;
 }
 
 int PagedArray::getMemory() const {

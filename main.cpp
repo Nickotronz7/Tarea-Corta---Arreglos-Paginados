@@ -29,15 +29,10 @@ int main() {
 */
 
     fstream file;
-    PagedArray* orden = new PagedArray("/home/nicko/Documents/ClionProjects/Tarea-Corta---Arreglos-Paginados/Archivos/1kb");
+    PagedArray* orden = new PagedArray("/home/nicko/Documents/ClionProjects/Tarea-Corta---Arreglos-Paginados/Archivos/36kb.txt");
 
 
-    int* pag;
-    pag = orden->pages.pageA;
-
-    for (int i = 0; i < pMax; ++i) {
-        cout << pag[i] << endl;
-    }
+    cout << orden->getMemory() << endl;
 
     return 0;
 }
