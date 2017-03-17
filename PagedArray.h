@@ -160,7 +160,7 @@ public:
         int* pageE = (int*)calloc(nums_page, sizeof(int));
         int* pageF = (int*)calloc(nums_page, sizeof(int));
 
-    } pages;
+    } pages ;
 
 private:
 
@@ -168,11 +168,12 @@ private:
      * peso del archivo
      */
     int Memory = 0;
+    const char* Path;
 
     /**
      * peso maximo de cada pagina
      */
-    const static int pMax = 1023;
+    const static int pMax = 1024;
 
     /**
      * cantidad maxima de numeros por pagina
@@ -188,6 +189,12 @@ private:
      * Array de arrays, facilita registro de que paginas estan cargadas en memoria
      */
     int** pags_memory = (int**)calloc(6, sizeof(int));
+public:
+    int* getPags_memory(int index) const;
+
+    void setPags_memory(int **pags_memory);
+
+private:
 
     /**
      * registro de que paginas estan en memoria

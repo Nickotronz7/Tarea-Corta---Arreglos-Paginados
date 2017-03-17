@@ -4,12 +4,14 @@
 
 #include <cstring>
 #include <cmath>
+#include <iostream>
 #include "PagedArray.h"
 
 using namespace std;
 
 PagedArray::PagedArray(const char* path) {
 
+    Path = path;
     setFile(path);
     file.seekg(0, ios::end);
     setMemory(((int)(file.tellg())));
@@ -17,40 +19,35 @@ PagedArray::PagedArray(const char* path) {
     size_of_virtual_array = getMemory()/4;
 
     for (int i = 0; i < 6; ++i) {
-        switch (i) {
-            case 0: {
-                pages.pageA = getPageNumber(getsPage(file, i));
-                pags_memory[i] = pages.pageA;
-                num_pags[i] = i;
-            }
-            case 1: {
-                pages.pageB = getPageNumber(getsPage(file, i));
-                pags_memory[i] = pages.pageB;
-                num_pags[i] = i;
-            }
-            case 2: {
-                pages.pageC = getPageNumber(getsPage(file, i));
-                pags_memory[i] = pages.pageC;
-                num_pags[i] = i;
-            }
-            case 3: {
-                pages.pageD = getPageNumber(getsPage(file, i));
-                pags_memory[i] = pages.pageD;
-                num_pags[i] = i;
-            }
-            case 4: {
-                pages.pageE = getPageNumber(getsPage(file, i));
-                pags_memory[i] = pages.pageE;
-                num_pags[i] = i;
-            }
-            case 5: {
-                pages.pageE = getPageNumber(getsPage(file, i));
-                pags_memory[i] = pages.pageF;
-                num_pags[i] = i;
-                default:
-                    break;
-            }
+        if (i == 0){
+            pages.pageA = getPageNumber(getsPage(file, i));
+            pags_memory[i] = pages.pageA;
+            num_pags[i] = i;
+        } else if (i == 1){
+            pages.pageB = getPageNumber(getsPage(file, i));
+            pags_memory[i] = pages.pageB;
+            num_pags[i] = i;
+        } else if (i == 2){
+            pages.pageC = getPageNumber(getsPage(file, i));
+            pags_memory[i] = pages.pageC;
+            num_pags[i] = i;
+        } else if (i == 3){
+            pages.pageD = getPageNumber(getsPage(file, i));
+            pags_memory[i] = pages.pageD;
+            num_pags[i] = i;
+        } else if(i == 4){
+            pages.pageE = getPageNumber(getsPage(file, i));
+            pags_memory[i] = pages.pageE;
+            num_pags[i] = i;
+        } else if (i == 5){
+            pages.pageF = getPageNumber(getsPage(file, i));
+            pags_memory[i] = pages.pageF;
+            num_pags[i] = i;
         }
+    }
+
+    for (int j = 0; j < 6; ++j) {
+        num_pags[j] = j;
     }
 
 }
@@ -82,9 +79,11 @@ void PagedArray::switch_Page(int page_num) {
 
 void PagedArray::writefile(){
 
-    int* pag_to_write = pags_memory[0];
+    file.open(Path, ios::out | ios::binary);
+    int* pag_to_write = getPags_memory(0);
     string Str_Pag;
     for (int i = 0; i < pMax; ++i) {
+
         Str_Pag += (to_string(pag_to_write[i]) + ',');
     }
 
@@ -93,6 +92,7 @@ void PagedArray::writefile(){
 
     file.seekp(pMax*num_pags[0]);
     file.write(buffer, Str_Pag.size());
+
 }
 
 int PagedArray::operator [](int index) {
@@ -138,15 +138,14 @@ int* PagedArray::getPageNumber(char* page) {
 
     int pIN = 0;
     int c = 0;
-    int pSize = getNumperpage(page);
 
-    int* pNum = (int*)calloc(pSize, sizeof(int));
+    int* pNum = (int*)calloc(nums_page, sizeof(int));
 
     for (int i = 0; i < pMax; ++i)
     {
         if(page[i] == ',')
         {
-            if(pIN < pSize)
+            if(pIN < nums_page)
             {
                 while (c > 0)
                 {
@@ -291,4 +290,12 @@ int PagedArray::divide(int *array, int start, int end) {
 
 int PagedArray::getSize_of_virtual_array() const {
     return size_of_virtual_array;
+}
+
+int* PagedArray::getPags_memory(int index) const {
+    return pags_memory[index];
+}
+
+void PagedArray::setPags_memory(int **pags_memory) {
+    PagedArray::pags_memory = pags_memory;
 }
